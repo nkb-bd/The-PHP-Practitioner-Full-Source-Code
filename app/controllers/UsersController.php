@@ -24,7 +24,18 @@ class UsersController
         App::get('database')->insert('users', [
             'name' => $_POST['name']
         ]);
-
-        return redirect('users');
+    
+    
+        echo "User inserted successfully. Attempting to redirect...<br>";
+    
+        if (headers_sent()) {
+            echo "Headers already sent. Using JavaScript redirect.<br>";
+            echo "<script>window.location.href = '/users';</script>";
+            echo '<noscript><meta http-equiv="refresh" content="0;url=/users"></noscript>';
+            exit();
+        } else {
+            echo "Headers not sent. Using PHP redirect.<br>";
+            return redirect('users');
+        }
     }
 }

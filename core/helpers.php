@@ -20,5 +20,8 @@ function view($name, $data = [])
  */
 function redirect($path)
 {
-    header("Location: /{$path}");
+    if (!headers_sent()) {
+        header("Location: /{$path}");
+        exit();
+    }
 }
